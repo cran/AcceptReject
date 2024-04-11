@@ -1,0 +1,17 @@
+a8a8c12ac3eb65ec8de0da6e9546ba53 *DESCRIPTION
+77bf706f627eb799c85bd1b7bb3f71eb *NAMESPACE
+c25db25e1f6b3768f3476940ab3cfeda *NEWS.md
+b928c2ded87ad82ceb96a14640905966 *R/accept_reject.r
+dee7f9ffa8cf72366bfe79550492ce49 *R/plot.r
+b045f7fce88be1ff1598e20e2b1f8c1e *R/print.r
+3f2c68403fe6080de0d63a55414f6b74 *README.md
+e7d6bc0f4a54cd1c8791838941601169 *build/vignette.rds
+b5cf95e14c553846467c383f2ad9d27f *inst/doc/accept_reject.R
+2285cbe72386eacde1a53e55624927d7 *inst/doc/accept_reject.Rmd
+6d8c09eb4c6704bb4e8106ba448c64d6 *inst/doc/accept_reject.html
+9621b6f67caec850d51ab2bfc3172aac *man/accept_reject.Rd
+df458bb79dbe458970cd3c177ecfe1a8 *man/figures/README-unnamed-chunk-2-1.png
+8b88ac1c531ef5c88dada6d174625064 *man/figures/README-unnamed-chunk-3-1.png
+228c1dbdc73889012853af387661693d *man/plot.accept_reject.Rd
+371488f6a90635e00887cb85ac9ca756 *man/print.accept_reject.Rd
+2285cbe72386eacde1a53e55624927d7 *vignettes/accept_reject.Rmd
