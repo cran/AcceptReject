@@ -11,8 +11,14 @@ options(tibble.print_min = 6, tibble.print_max = 6)
 modern_r <- getRversion() >= "4.1.0"
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # install.packages("remotes")
-#  # or remotes::install_github("prdm0/AcceptReject", force = TRUE)
+#  install.packages("AcceptReject")
+#  
+#  # or
+#  
+#  install.packages("remotes")
+#  remotes::install_github("prdm0/AcceptReject", force = TRUE)
+#  
+#  # Load the package
 #  library(AcceptReject)
 
 ## ----eval = FALSE-------------------------------------------------------------
@@ -35,7 +41,7 @@ modern_r <- getRversion() >= "4.1.0"
 library(AcceptReject)
 
 # Ensuring Reproducibility
-set.seed(0) 
+set.seed(0)
 
 # Generating observations
 data <- AcceptReject::accept_reject(
@@ -63,7 +69,7 @@ plot(values, true_prob, type = "p", pch = 16, col = "blue",
 
 # Adding the observed probabilities
 points(as.numeric(names(obs_prob)), obs_prob, pch = 16L, col = "red")
-legend("topright", legend = c("True probability", "Observed probability"), 
+legend("topright", legend = c("True probability", "Observed probability"),
        col = c("blue", "red"), pch = 16L, cex = 0.8)
 grid()
 
@@ -71,7 +77,7 @@ grid()
 library(AcceptReject)
 
 # Ensuring reproducibility
-set.seed(0) 
+set.seed(0)
 
 # Generating observations
 data <- AcceptReject::accept_reject(
@@ -99,7 +105,7 @@ plot(values, true_prob, type = "p", pch = 16, col = "blue",
 
 # Adding the observed probabilities
 points(as.numeric(names(obs_prob)), obs_prob, pch = 16L, col = "red")
-legend("topright", legend = c("True probability", "Observed probability"), 
+legend("topright", legend = c("True probability", "Observed probability"),
        col = c("blue", "red"), pch = 16L, cex = 0.8)
 grid()
 
@@ -107,7 +113,7 @@ grid()
 library(AcceptReject)
 
 # Ensuring reproducibility
-set.seed(0) 
+set.seed(0)
 
 # Generating observations
 data <- AcceptReject::accept_reject(
@@ -137,10 +143,10 @@ legend("topright", legend = "True density", col = "red", lwd = 2)
 
 ## -----------------------------------------------------------------------------
 library(AcceptReject)
-library(patchwork) # install.packages("pacthwork")
+library(cowplot) # install.packages("cowplot")
 
 # Ensuring reproducibility
-set.seed(0) 
+set.seed(0)
 
 simulation <- function(n){
   AcceptReject::accept_reject(
@@ -153,22 +159,22 @@ simulation <- function(n){
   )
 }
 # Inspecting
-p1 <- simulation(n = 250L) |> plot()
-p2 <- simulation(n = 2500L) |> plot()
-p3 <- simulation(n = 25000L) |> plot()
-p4 <- simulation(n = 250000L) |> plot()
+a <- plot(simulation(n = 250L))
+b <- plot(simulation(n = 2500L))
+c <- plot(simulation(n = 25000L))
+d <- plot(simulation(n = 250000L))
 
-p1 + p2 + p3 + p4
+plot_grid(a, b, c, d, nrow = 2L, labels = c("a", "b", "c", "d"))
 
 ## -----------------------------------------------------------------------------
 library(AcceptReject)
-library(patchwork) # install.packages("patchwork")
+library(cowplot) # install.packages("cowplot")
 # Ensuring Reproducibility
-set.seed(0) 
+set.seed(0)
 
 simulation <- function(n){
   AcceptReject::accept_reject(
-    n = 1000L,
+    n = n,
     f = dpois,
     continuous = FALSE,
     args_f = list(lambda = 0.7),
@@ -177,12 +183,12 @@ simulation <- function(n){
   )
 }
 
-p1 <- simulation(25L) |> plot()
-p2 <- simulation(250L) |> plot()
-p3 <- simulation(2500L) |> plot()
-p4 <- simulation(25000L) |> plot()
+a <- plot(simulation(25L))
+b <- plot(simulation(250L))
+c <- plot(simulation(2500L))
+d <- plot(simulation(25000L))
 
-p1 + p2 + p3 + p4
+plot_grid(a, b, c, d, nrow = 2L, labels = c("a", "b", "c", "d"))
 
 ## -----------------------------------------------------------------------------
 library(AcceptReject)

@@ -6,12 +6,13 @@
 \usage{
 \method{plot}{accept_reject}(
   x,
-  color_observed_density = "#FBBA78",
-  color_true_density = "#1D7DA5",
-  color_bar = "#FCEFC3",
+  color_observed_density = "#BB9FC9",
+  color_true_density = "#FE4F0E",
+  color_bar = "#BB9FC9",
   color_observable_point = "#7BBDB3",
   color_real_point = "#FE4F0E",
   alpha = 0.3,
+  hist = TRUE,
   ...
 )
 }
@@ -20,7 +21,7 @@
 
 \item{color_observed_density}{Observed density color (continuous case).}
 
-\item{color_true_density}{True density color (continuous case)}
+\item{color_true_density}{True histogram density color (continuous case)}
 
 \item{color_bar}{Bar chart fill color (discrete case)}
 
@@ -30,6 +31,10 @@
 
 \item{alpha}{Bar chart transparency (discrete case) and observed density
 (continuous case)}
+
+\item{hist}{If TRUE, a histogram will be plotted in the continuous case,
+comparing the theoretical density with the observed one. If FALSE,
+\code{\link[ggplot2:geom_density]{ggplot2::geom_density()}} will be used instead of the histogram.}
 
 \item{...}{Additional arguments.}
 }
@@ -54,21 +59,23 @@ The function \code{\link[=plot.accept_reject]{plot.accept_reject()}}, or simply 
 for inspection and expects an object of class \code{accept_reject} as an argument.
 }
 \examples{
-accept_reject(
-   n = 2000L,
+x <- accept_reject(
+   n = 1000L,
    f = dbinom,
    continuous = FALSE,
    args_f = list(size = 5, prob = 0.5),
    xlim = c(0, 10)
-) |> plot()
+)
+plot(x)
 
-accept_reject(
-  n = 1000L,
+y <- accept_reject(
+  n = 500L,
   f = dnorm,
   continuous = TRUE,
   args_f = list(mean = 0, sd = 1),
   xlim = c(-4, 4)
-) |> plot()
+)
+plot(y)
 
 }
 \seealso{

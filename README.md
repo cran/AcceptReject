@@ -1,14 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# AcceptReject <img src="logo.png" align="right" />
+# AcceptReject <img src="logo.png" align="right" width="250" />
 
-<!-- badges: start -->
-<!-- [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/purrr)](https://cran.r-project.org/package=purrr) -->
-<!-- [![Codecov test coverage](https://codecov.io/gh/tidyverse/purrr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/purrr?branch=master) -->
-
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/AcceptReject)](https://cran.r-project.org/package=AcceptReject)
 [![R-CMD-check](https://github.com/prdm0/AcceptReject/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/prdm0/AcceptReject/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
+[![r-universe](https://prdm0.r-universe.dev/badges/AcceptReject)](https://prdm0.r-universe.dev)
+[![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AcceptReject)](https://cran.r-project.org/package=AcceptReject)
 
 Generating pseudo-random observations from a probability distribution is
 a common task in statistics. Being able to generate pseudo-random
@@ -116,13 +115,13 @@ very close to zero. In this case, we choose `xlim = c(0, 20)`, where
 
 ``` r
 library(AcceptReject)
-library(patchwork) # install.packages("patchwork")
+library(cowplot) # install.packages("cowplot")
 # Ensuring Reproducibility
 set.seed(0) 
 
 simulation <- function(n){
   AcceptReject::accept_reject(
-    n = 1000L,
+    n = n,
     f = dpois,
     continuous = FALSE,
     args_f = list(lambda = 0.7),
@@ -131,12 +130,12 @@ simulation <- function(n){
   )
 }
 
-p1 <- simulation(25L) |> plot()
-p2 <- simulation(250L) |> plot()
-p3 <- simulation(2500L) |> plot()
-p4 <- simulation(25000L) |> plot()
+a <- plot(simulation(25L))
+b <- plot(simulation(250L))
+c <- plot(simulation(2500L))
+d <- plot(simulation(25000L))
 
-p1 + p2 + p3 + p4
+plot_grid(a, b, c, d, nrow = 2L, labels = c("a", "b", "c", "d"))
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
@@ -154,7 +153,7 @@ observations using the acceptance-rejection method. Note that
 
 ``` r
 library(AcceptReject)
-library(patchwork)
+library(cowplot) # install.packages("cowplot")
 
 # Ensuring reproducibility
 set.seed(0) 
@@ -170,12 +169,148 @@ simulation <- function(n){
   )
 }
 # Inspecting
-p1 <- simulation(n = 250L) |> plot()
-p2 <- simulation(n = 2500L) |> plot()
-p3 <- simulation(n = 25000L) |> plot()
-p4 <- simulation(n = 250000L) |> plot()
+a <- plot(simulation(n = 250L))
+b <- plot(simulation(n = 2500L))
+c <- plot(simulation(n = 25000L))
+d <- plot(simulation(n = 250000L))
 
-p1 + p2 + p3 + p4
+plot_grid(a, b, c, d, nrow = 2L, labels = c("a", "b", "c", "d"))
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+The
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function supports, **for the continuous case**, specifying a base
+probability density function if you don’t want to use the continuous
+uniform distribution as the default base.
+
+When choosing to specify another probability density function different
+from the uniform one, it’s necessary to specify the following arguments:
+
+- `f_base`: base probability density function;
+- `random_base`: sampling from the base probability density function;
+- `args_f_base`: list with the parameters of the base density.
+
+By default, all of them are `NULL`, and the continuous uniform
+distribution in `xlim` is used as the base. If at least one of these
+arguments is not specified, no error will occur, and the continuous
+uniform distribution in `xlim` will still be used as the base.
+
+For the discrete case, if the user mistakenly specifies any of these
+arguments, i.e., when `continuous = FALSE`, the
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function will ignore these arguments and use the discrete uniform
+distribution as the base.
+
+If you choose to specify a base density, it’s convenient to inspect it
+by comparing the base density function with the theoretical probability
+density function. The
+[`inspect()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function facilitates this task. The
+[`inspect()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function will plot the base probability density function and the
+theoretical probability density function, find the intersection between
+the densities, and display the value of the intersection area on the
+plot. These are important pieces of information to decide if the base
+probability density function specified in the `args_f_base` argument and
+the value of `c` (default is 1) are appropriate.
+
+## Example of inspection
+
+``` r
+library(AcceptReject)
+library(cowplot) # install.packages("cowplot")
+
+# Ensuring reproducibility
+set.seed(0)
+
+# Inspecting
+# Case a
+a <- inspect(
+  f = dweibull,
+  args_f = list(shape = 2.1, scale = 2.2),
+  f_base = dgamma,
+  args_f_base = list(shape = 2.8, rate = 1.2),
+  xlim = c(0, 10),
+  c = 1.2
+)
+
+# Inspecting
+# Case b
+b <- inspect(
+  f = dweibull,
+  args_f = list(shape = 2.1, scale = 2.2),
+  f_base = dgamma,
+  args_f_base = list(shape = 2.9, rate = 2.5),
+  xlim = c(0, 10),
+  c = 1.4
+)
+
+plot_grid(a, b, nrow = 2L, labels = c("a", "b"))
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+Notice that considering the distribution in scenario “a” in the code
+above is more convenient. Note that the area is approximately 1, the
+base probability density function with parameters `shape = 2.8` and
+`rate = 1.2` provides a shape close to the theoretical distribution, and
+`c = 1.2` ensures that the base density function upper bounds the
+theoretical probability density function. Therefore, considering
+`f_base` with $\Gamma(\alpha = 2.8, \beta = 1.2)$ and `c = 1.2` is a
+reasonable choice for a base distribution.
+
+Therefore, passing arguments to `f_base = dgamma`,
+`args_f_base = list(shape = 2.8, rate = 1.2)`, and `c = 1.2` to the
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function will lead us to an even more efficient code.
+
+``` r
+library(AcceptReject)
+library(tictoc) # install.packages("tictoc")
+
+# Ensuring reproducibility
+set.seed(0)
+
+# Não especificando a função densidade de probabilidade base
+
+tic()
+case_1 <- accept_reject(
+  n = 200e3L,
+  continuous = TRUE,
+  f = dweibull,
+  args_f = list(shape = 2.1, scale = 2.2),
+  xlim = c(0, 10)
+)
+toc()
+#> 0.385 sec elapsed
+
+# Specifying the base probability density function
+tic()
+case_2 <- accept_reject(
+  n = 200e3L,
+  continuous = TRUE,
+  f = dweibull,
+  args_f = list(shape = 2.1, scale = 2.2),
+  f_base = dgamma,
+  random_base = rgamma,
+  args_f_base = list(shape = 2.8, rate = 1.2),
+  xlim = c(0, 10),
+  c = 1.2
+)
+toc()
+#> 0.151 sec elapsed
+
+# Visualizing the results
+p1 <- plot(case_1)
+p2 <- plot(case_2)
+
+plot_grid(p1, p2, nrow = 2L)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+Notice that the results were very close in a graphical analysis.
+However, the execution time specifying a convenient base density was
+lower for a very large sample.
