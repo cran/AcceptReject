@@ -25,15 +25,16 @@ modern_r <- getRversion() >= "4.1.0"
 #  accept_reject(
 #    n = 1L,
 #    continuous = TRUE,
-#    f = dweibull,
-#    args_f = list(shape = 1, scale = 1),
-#    xlim = c(0, 100),
+#    f = NULL,
+#    args_f = NULL,
+#    f_base = NULL,
+#    random_base = NULL,
+#    args_f_base = NULL,
+#    xlim = NULL,
 #    c = NULL,
-#    linesearch_algorithm = "LBFGS_LINESEARCH_BACKTRACKING_ARMIJO",
-#    max_iterations = 1000L,
-#    epsilon = 1e-06,
-#    start_c = 25,
 #    parallel = FALSE,
+#    cores = NULL,
+#    warning = TRUE,
 #    ...
 #  )
 

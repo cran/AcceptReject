@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# AcceptReject <img src="logo.png" align="right" width="250" />
+# AcceptReject <img src="logo.png" align="right" width="250"/>
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/AcceptReject)](https://cran.r-project.org/package=AcceptReject)
 [![R-CMD-check](https://github.com/prdm0/AcceptReject/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/prdm0/AcceptReject/actions/workflows/R-CMD-check.yaml)
@@ -15,6 +15,15 @@ observations from a probability distribution is useful for simulating
 scenarios, in
 [Monte-Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods,
 which are useful for evaluating various statistical models.
+
+The acceptance-rejection method was developed by [John von
+Neumann](https://pt.wikipedia.org/wiki/John_von_Neumann) in 1951 and is
+a well-known technique present in various computational statistics
+books. The original reference can be found at the link below:
+
+💎 [Neumann V (1951). “Various techniques used in connection with random
+digits.” Notes by GE Forsythe,
+pp. 36–38.](https://mcnp.lanl.gov/pdf_files/InBook_Computing_1961_Neumann_JohnVonNeumannCollectedWorks_VariousTechniquesUsedinConnectionwithRandomDigits.pdf)
 
 The inversion method is a common way to do this, but it is not always
 possible to find a closed-form formula for the inverse function of the
@@ -36,46 +45,54 @@ pseudo-random observations from probability distributions that are
 difficult to sample directly.
 
 The package [AcceptReject](https://github.com/prdm0/AcceptReject)
-provides the `AcceptReject::accept_reject()` function that implements
-the acceptance-rejection method in an optimized manner to generate
+provides the
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function, in addition to other functions, that implements the
+acceptance-rejection method in an optimized manner to generate
 pseudo-random observations for discrete or continuous random variables.
-The `AcceptReject::accept_reject()` function operates in parallel on
-Unix-based operating systems such as Linux and MacOS and operates
-sequentially on Windows-based operating systems; however, it still
-exhibits good performance. By default, on Unix-based systems,
-observations are generated sequentially, but it is possible to generate
-observations in parallel if desired, by using the `parallel = TRUE`
-argument.
+The
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function operates in parallel on Unix-based operating systems such as
+Linux and MacOS and operates sequentially on Windows-based operating
+systems; however, it still exhibits good performance. By default, on
+Unix-based systems, observations are generated sequentially, but it is
+possible to generate observations in parallel if desired, by using the
+`parallel = TRUE` argument.
 
-The `AcceptReject::accept_reject()` function, by default, attempts to
-maximize the probability of acceptance of the pseudo-random observations
-generated. Suppose $X$ and $Y$ are random variables with probability
-density function (pdf) or probability function (pf) $f$ and $g$,
-respectively. Furthermore, suppose there exists a constant $c$ such that
+The
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function, by default, attempts to maximize the probability of acceptance
+of the pseudo-random observations generated. Suppose $X$ and $Y$ are
+random variables with probability density function (pdf) or probability
+function (pf) $f$ and $g$, respectively. Furthermore, suppose there
+exists a constant $c$ such that
 
 $$\frac{f_X(x)}{g_Y(y)} \leq c.$$
 
 By default, the accept_reject function attempts to find the value of $c$
 that maximizes the probability of acceptance of the pseudo-random
 observations generated. However, it is possible to provide a value of
-$c$ to the `AcceptReject::accept_reject()` function through the argument
-`c`, where $Y$ is a random variable for which we know how to generate
-observations. For the `AcceptReject::accept_reject()` function, it is
-not necessary to specify the probability function or probability density
-function of $Y$ to generate observations of $X$ for discrete and
-continuous cases, respectively. For the discrete and continuous cases,
-$Y$ follows the discrete uniform distribution function and continuous
-uniform distribution function, respectively.
+$c$ to the
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function through the argument `c`, where $Y$ is a random variable for
+which we know how to generate observations. For the
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function, it is not necessary to specify the probability function or
+probability density function of $Y$ to generate observations of $X$ for
+discrete and continuous cases, respectively. For the discrete and
+continuous cases, $Y$ follows the discrete uniform distribution function
+and continuous uniform distribution function, respectively.
 
 Since the probability of acceptance is $1/c$, the
-`AcceptReject::accept_reject()` function attempts to find the minimum
-value of $c$ that satisfies the description above. Unless you have
-compelling reasons to provide a value for the `c` argument of the
-`AcceptReject::accept_reject()` function, it is recommended to use
-`c = NULL` (default), allowing a value of $c$ to be automatically
-determined.
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function attempts to find the minimum value of $c$ that satisfies the
+description above. Unless you have compelling reasons to provide a value
+for the `c` argument of the
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function, it is recommended to use `c = NULL` (default), allowing a
+value of $c$ to be automatically determined.
 
-## Installation
+## 💻 Installation
 
 The package is being versioned on GitHub. You can install the
 development version of
@@ -94,27 +111,51 @@ The `force = TRUE` argument is not necessary. It is only needed in
 situations where you have already installed the package and want to
 reinstall it to have a new version.
 
-## Examples
+You can also install the package version available on [Comprehensive R
+Archive Network -
+CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html):
+
+``` r
+install.packages("AcceptReject")
+```
+
+## 📚 Examples
 
 Please note the examples below on how to use the
-`AcceptReject::accept_reject()` function to generate pseudo-random
-observations of discrete and continuous random variables. For further
-details, refer to the function’s documentation
+[`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
+function to generate pseudo-random observations of discrete and
+continuous random variables. For further details, refer to the
+function’s documentation
 [**Reference**](https://prdm0.github.io/AcceptReject/reference/) and the
 [**Vignette**](https://prdm0.github.io/AcceptReject/articles/accept_reject.html).
+
+In the examples, we use well-known distributions, but it’s important to
+note that the accept-reject method can be used to generate observations
+from probability distributions for which we don’t know how to generate
+observations directly. Thus, if you need to generate observations from a
+random variable with a distribution for which there are no built-in
+functions in R that you can use to generate observations (such as
+functions like `rnorm()`, `rgamma()`, `rweibull()`, `rchisq()`, among
+others), the [AcceptReject](https://prdm0.github.io/AcceptReject/)
+package might be what you need. 🎉
 
 ### Generating discrete observations
 
 As an example, let $X \sim Poisson(\lambda = 0.7)$. We will generate
 $n = 1000$ observations of $X$ using the acceptance-rejection method,
-using the `AcceptReject::accept_reject()` function. Note that it is
-necessary to provide the `xlim` argument. Try to set an upper limit
-value for which the probability of $X$ assuming that value is zero or
-very close to zero. In this case, we choose `xlim = c(0, 20)`, where
-`dpois(x = 20, lambda = 0.7)` is very close to zero (1.6286586^{-22}).
+using the `accept_reject()` function. Note that it is necessary to
+provide the `xlim` argument. Try to set an upper limit value for which
+the probability of $X$ assuming that value is zero or very close to
+zero. In this case, we choose `xlim = c(0, 6)`, where
+`dpois(x = 6, lambda = 0.7)` is very close to zero (8.1142728^{-5}).
 
 ``` r
 library(AcceptReject)
+#> 
+#> Anexando pacote: 'AcceptReject'
+#> O seguinte objeto é mascarado por 'package:stats':
+#> 
+#>     qqplot
 library(cowplot) # install.packages("cowplot")
 # Ensuring Reproducibility
 set.seed(0) 
@@ -125,20 +166,39 @@ simulation <- function(n){
     f = dpois,
     continuous = FALSE,
     args_f = list(lambda = 0.7),
-    xlim = c(0, 20),
+    xlim = c(0, 6),
     parallel = TRUE
   )
 }
 
-a <- plot(simulation(25L))
-b <- plot(simulation(250L))
-c <- plot(simulation(2500L))
-d <- plot(simulation(25000L))
+a <- simulation(25L)
+b <- simulation(250L)
+c <- simulation(2500L)
+d <- simulation(25000L)
 
-plot_grid(a, b, c, d, nrow = 2L, labels = c("a", "b", "c", "d"))
+# Plots
+p1 <- plot(a)
+p2 <- plot(b)
+p3 <- plot(c)
+p4 <- plot(d)
+
+plot_grid(p1, p2, p3, p4, nrow = 2L, labels = c("a", "b", "c", "d"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+``` r
+
+# QQ-Plots
+q1 <- qqplot(a, size_points = 2)
+q2 <- qqplot(b, size_points = 2)
+q3 <- qqplot(c, size_points = 2)
+q4 <- qqplot(d, size_points = 2)
+
+plot_grid(q1, q2, q3, q4, nrow = 2L, labels = c("a", "b", "c", "d"))
+```
+
+<img src="man/figures/README-unnamed-chunk-3-2.png" width="100%" />
 
 ## Generating continuous observations
 
@@ -147,9 +207,7 @@ discrete random variables, consider now that we want to generate
 observations from a random variable
 $X \sim \mathcal{N}(\mu = 0, \sigma^2 = 1)$. We chose the normal
 distribution because we are familiar with its form, but you can choose
-another distribution if desired. Below, we will generate `n = 2000`
-observations using the acceptance-rejection method. Note that
-`continuous = TRUE`.
+another distribution if desired.
 
 ``` r
 library(AcceptReject)
@@ -168,16 +226,35 @@ simulation <- function(n){
     parallel = TRUE
   )
 }
-# Inspecting
-a <- plot(simulation(n = 250L))
-b <- plot(simulation(n = 2500L))
-c <- plot(simulation(n = 25000L))
-d <- plot(simulation(n = 250000L))
 
-plot_grid(a, b, c, d, nrow = 2L, labels = c("a", "b", "c", "d"))
+a <- simulation(n = 100L)
+b <- simulation(n = 150L)
+c <- simulation(n = 250L)
+d <- simulation(n = 2500L)
+
+# Plots
+p1 <- plot(a)
+p2 <- plot(b)
+p3 <- plot(c)
+p4 <- plot(d)
+
+plot_grid(p1, p2, p3, p4, nrow = 2L, labels = c("a", "b", "c", "d"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+``` r
+
+# QQ-plots
+q1 <- qqplot(a)
+q2 <- qqplot(b)
+q3 <- qqplot(c)
+q4 <- qqplot(d)
+
+plot_grid(q1, q2, q3, q4, nrow = 2L, labels = c("a", "b", "c", "d"))
+```
+
+<img src="man/figures/README-unnamed-chunk-4-2.png" width="100%" />
 
 The
 [`accept_reject()`](https://prdm0.github.io/AcceptReject/reference/accept_reject.html)
@@ -216,7 +293,7 @@ plot. These are important pieces of information to decide if the base
 probability density function specified in the `args_f_base` argument and
 the value of `c` (default is 1) are appropriate.
 
-## Example of inspection
+## 🕵️‍♀️ Example of inspection
 
 ``` r
 library(AcceptReject)
@@ -232,7 +309,7 @@ a <- inspect(
   args_f = list(shape = 2.1, scale = 2.2),
   f_base = dgamma,
   args_f_base = list(shape = 2.8, rate = 1.2),
-  xlim = c(0, 10),
+  xlim = c(0, 6),
   c = 1.2
 )
 
@@ -243,14 +320,14 @@ b <- inspect(
   args_f = list(shape = 2.1, scale = 2.2),
   f_base = dgamma,
   args_f_base = list(shape = 2.9, rate = 2.5),
-  xlim = c(0, 10),
+  xlim = c(0, 6),
   c = 1.4
 )
 
 plot_grid(a, b, nrow = 2L, labels = c("a", "b"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 Notice that considering the distribution in scenario “a” in the code
 above is more convenient. Note that the area is approximately 1, the
@@ -277,30 +354,30 @@ set.seed(0)
 
 tic()
 case_1 <- accept_reject(
-  n = 200e3L,
+  n = 2000,
   continuous = TRUE,
   f = dweibull,
   args_f = list(shape = 2.1, scale = 2.2),
-  xlim = c(0, 10)
+  xlim = c(0, 6)
 )
 toc()
-#> 0.385 sec elapsed
+#> 0.005 sec elapsed
 
 # Specifying the base probability density function
 tic()
 case_2 <- accept_reject(
-  n = 200e3L,
+  n = 2000,
   continuous = TRUE,
   f = dweibull,
   args_f = list(shape = 2.1, scale = 2.2),
   f_base = dgamma,
   random_base = rgamma,
   args_f_base = list(shape = 2.8, rate = 1.2),
-  xlim = c(0, 10),
+  xlim = c(0, 6),
   c = 1.2
 )
 toc()
-#> 0.151 sec elapsed
+#> 0.004 sec elapsed
 
 # Visualizing the results
 p1 <- plot(case_1)
@@ -309,7 +386,17 @@ p2 <- plot(case_2)
 plot_grid(p1, p2, nrow = 2L)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+``` r
+
+# QQ-plot
+q1 <- qqplot(case_1)
+q2 <- qqplot(case_2)
+plot_grid(q1, q2, nrow = 1L)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
 
 Notice that the results were very close in a graphical analysis.
 However, the execution time specifying a convenient base density was

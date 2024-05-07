@@ -7,10 +7,10 @@
 \method{plot}{accept_reject}(
   x,
   color_observed_density = "#BB9FC9",
-  color_true_density = "#FE4F0E",
+  color_true_density = "#F890C2",
   color_bar = "#BB9FC9",
   color_observable_point = "#7BBDB3",
-  color_real_point = "#FE4F0E",
+  color_real_point = "#F890C2",
   alpha = 0.3,
   hist = TRUE,
   ...
@@ -32,8 +32,8 @@
 \item{alpha}{Bar chart transparency (discrete case) and observed density
 (continuous case)}
 
-\item{hist}{If TRUE, a histogram will be plotted in the continuous case,
-comparing the theoretical density with the observed one. If FALSE,
+\item{hist}{If \code{TRUE}, a histogram will be plotted in the continuous case,
+comparing the theoretical density with the observed one. If \code{FALSE},
 \code{\link[ggplot2:geom_density]{ggplot2::geom_density()}} will be used instead of the histogram.}
 
 \item{...}{Additional arguments.}
@@ -63,7 +63,7 @@ x <- accept_reject(
    n = 1000L,
    f = dbinom,
    continuous = FALSE,
-   args_f = list(size = 5, prob = 0.5),
+   args_f = list(size = 10, prob = 0.5),
    xlim = c(0, 10)
 )
 plot(x)
